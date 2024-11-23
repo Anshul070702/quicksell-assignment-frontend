@@ -30,11 +30,11 @@ const App = () => {
   ];
 
   let priorities = {
-    4: { label: "Urgent", img: urgerntPriority },
-    3: { label: "High", img: highPriority },
-    2: { label: "Medium", img: mediumPriority },
-    1: { label: "Low", img: lowPriority },
     0: { label: "No priority", img: noPriority },
+    1: { label: "Low", img: lowPriority },
+    2: { label: "Medium", img: mediumPriority },
+    3: { label: "High", img: highPriority },
+    4: { label: "Urgent", img: urgerntPriority },
   };
 
   let priorityScores = [0, 1, 2, 3, 4];

@@ -53,9 +53,11 @@ function Dashboard({
         );
         break;
       case "Priority":
-        groupedTickets = priorityScores.map((priority) =>
-          data.tickets.filter((ticket) => ticket.priority === priority)
-        );
+        groupedTickets = priorityScores
+          .sort((a, b) => a - b) // Sort priority scores in ascending order (0 -> 4)
+          .map((priority) =>
+            data.tickets.filter((ticket) => ticket.priority === priority)
+          );
         break;
       default:
         break;
@@ -90,10 +92,12 @@ function Dashboard({
             ? statuses[key]
             : grouping === "User"
             ? data.users[key]
-            : {
-                label: priorities[priorityScores[key]]?.label || "No priority",
-                img: priorities[priorityScores[key]]?.img,
-              };
+            : grouping === "Priority"
+            ? {
+                label: priorities[priorityScores[key]]?.label || "No priority", // Ensure correct label
+                img: priorities[priorityScores[key]]?.img, // Ensure correct image
+              }
+            : { label: "", img: "" }; // Default fallback for other cases
 
         return (
           <div className="dashboard-list" key={key}>
@@ -114,6 +118,18 @@ function Dashboard({
                 {/* Display MdAccountCircle for User grouping */}
                 {grouping === "User" && (
                   <MdAccountCircle
+                    style={{
+                      height: "20px",
+                      width: "20px",
+                      marginLeft: "10px",
+                    }}
+                  />
+                )}
+                {/* Display image for Priority if it exists */}
+                {grouping === "Priority" && headerInfo.img && (
+                  <img
+                    src={headerInfo.img}
+                    alt={headerInfo.label}
                     style={{
                       height: "20px",
                       width: "20px",
